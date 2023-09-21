@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Page</title>
+</head>
+<body>
+<h1 th:text="${message}"></h1>
+<form th:action="@{/mypage}" method="get">
+    <button type="submit">Click Me</button>
+</form>
+<h1>STATIC</h1>
+<a th:href="@{/mypage}">Go to Page 2</a>
+</body>
+</html>

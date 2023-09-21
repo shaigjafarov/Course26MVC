@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Second Page</title>
+</head>
+<body>
+<form th:object="${user}" th:action="@{/processForm}" method="post">
+    <input type="text" th:field="*{username}" placeholder="Username" />
+    <input type="text" th:field="*{email}" placeholder="Email" />
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
