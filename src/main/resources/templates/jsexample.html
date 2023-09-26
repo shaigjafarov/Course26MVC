@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>POST Request on Button Click</title>
+    <th:block th:replace="common-head :: common-head"></th:block>
+
+</head>
+<body>
+<button id="postButton", name="asdsd">Submit POST Request</button>
+<input type="text" id="nameid" placeholder="Shaig" >
+<input type="text" id="surnameid" placeholder="Jafarov" >
+
+<script type="text/javascript">
+    // Get the button element
+    var postButton = document.getElementById('postButton');
+
+    // Add a click event listener to the button
+    postButton.addEventListener('click', function() {
+        // Define the URL to which you want to send the POST request
+        var url = 'http://localhost:8082/mvc/to_console'; // Replace with your actual URL
+
+
+        var name = document.getElementById("nameid");
+        var surname = document.getElementById("surnameid");
+
+        // Create an object with data to send in the request (if needed)
+        var data = {
+            name: name.value,
+            surname: surname.value
+        };
+
+        // Perform a POST request using the fetch API
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Adjust the content type if needed
+            },
+            body: JSON.stringify(data) // Convert data to JSON format if sending JSON data
+        })
+            .then(response => response.text())
+            .then(data=>{
+                alert(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle network errors or exceptions here
+            });
+    });
+</script>
+</body>
+</html>
