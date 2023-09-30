@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WebSocket Chat</title>
+</head>
+<body>
+<div>
+    <input id="message" type="text" placeholder="Enter your message..." />
+    <button onclick="sendMessage()">Send</button>
+</div>
+<div id="chat"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/ws-demo');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+            stompClient.subscribe('/topic/messages', function(response) {
+                console.log(response);
+                showMessage(JSON.parse(response.body).content);
+            });
+        });
+    }
+
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+        }
+    }
+
+    function sendMessage() {
+        var message = document.getElementById('message').value;
+        stompClient.send("/app/chat", {}, JSON.stringify({'content': message}));
+        document.getElementById('message').value = '';
+    }
+
+    function showMessage(message) {
+        var chatDiv = document.getElementById('chat');
+        var p = document.createElement('p');
+        p.textContent = message;
+        chatDiv.appendChild(p);
+    }
+
+    connect();
+</script>
+
+
+<!--<script src="/static/jslib/cdnjs.cloudflare.com_ajax_libs_sockjs-client_1.6.1_sockjs.min.js"></script>-->
+<!--<script src="/static/jslib/cdnjs.cloudflare.com_ajax_libs_stomp.js_2.3.3_stomp.min.js"></script>-->
+
+</body>
+</html>

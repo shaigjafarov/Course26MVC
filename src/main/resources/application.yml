@@ -1,7 +1,9 @@
 server:
   port: 8082
-  servlet:
-    context-path: /mvc
 spring:
   application:
     name: mvc
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgre123
