@@ -1,6 +1,7 @@
 package az.code.course26mvc.controller;
 
 import az.code.course26mvc.model.ChatMessage;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -28,6 +29,17 @@ public class ChatController {
         messagingTemplate.convertAndSend("/topic/messages", message);
 return message;
     }
+
+
+//    @MessageMapping("/send-message")
+//    public void sendMessage(String message) {
+//        // Get the userId from the authentication context
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userId = authentication.getName();
+//
+//        // Send the message to the specified user
+//        messagingTemplate.convertAndSendToUser(userId, "/queue/reply", message);
+//    }
 
 
 

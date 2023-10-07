@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  app:
+    build:
+      context: .  # Use the current directory as the build context
+      dockerfile: Dockerfile  # Use the Dockerfile from the current directory
+    ports:
+      - "8080:8080"  # Map host port 8080 to container port 8080
+    depends_on:
+      - rabbitmq
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq  # Set RabbitMQ host in Spring Boot
+
+  rabbitmq:
+    image: "rabbitmq:3.9-management"  # Use the official RabbitMQ image
+    ports:
+      - "5672:5672"  # RabbitMQ default port
+      - "15672:15672"  # RabbitMQ Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
